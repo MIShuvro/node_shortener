@@ -70,7 +70,9 @@ module.exports.registerController=async(req,res)=>{
         try {
             const user=await newUser.save()
             if(user)
-                res.redirect('back')
+            req.flash('success_msg','You have registered successfully!!')
+                res.redirect('/auth/login')
+
         } catch (error) {
         
           
@@ -78,7 +80,9 @@ module.exports.registerController=async(req,res)=>{
       
     }
     else{
-        res.json(req.validationErrors()) 
+       // req.session.errors=req.validationErrors()
+        req.flash('errors',req.validationErrors())
+        res.redirect('back')
     }
 
 }
